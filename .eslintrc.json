@@ -20,6 +20,7 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint", "prettier"],
+  "no-unused-vars": "off",
   "rules": {
     "@typescript-eslint/no-unused-vars": [
       "error",

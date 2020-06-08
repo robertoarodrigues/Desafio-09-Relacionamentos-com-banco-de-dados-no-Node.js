@@ -11,24 +11,42 @@ import {
 import Order from '@modules/orders/infra/typeorm/entities/Order';
 import Product from '@modules/products/infra/typeorm/entities/Product';
 
+@Entity('orders_products')
 class OrdersProducts {
-  id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id?: string;
 
-  order: Order;
+  @ManyToOne(type => Order, order => order.order_products, {
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'order_id', referencedColumnName: 'id' })
+  order?: Order;
 
-  product: Product;
+  @ManyToOne(type => Product, product => product.order_products, {
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
+  })
+  @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
+  product?: Product;
 
+  @Column()
   product_id: string;
 
-  order_id: string;
+  @Column()
+  order_id?: string;
 
+  @Column()
   price: number;
 
+  @Column()
   quantity: number;
 
-  created_at: Date;
+  @CreateDateColumn()
+  created_at?: Date;
 
-  updated_at: Date;
+  @UpdateDateColumn()
+  updated_at?: Date;
 }
 
 export default OrdersProducts;
